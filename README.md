@@ -29,7 +29,6 @@ _(Note: This directly installs Flask. For larger projects or to ensure exact dep
 
 Your browser should automatically open to `http://127.0.0.1:5000/`. If not, navigate there manually.
 
-_Optional: For Windows users, double-click the `StartPDFCompressor.bat` file (if you created it) to automatically start the server and open the browser._
 
 ### 4\. **Use It!**
 
