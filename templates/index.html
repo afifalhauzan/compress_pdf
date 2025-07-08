@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .dropzone {
+            border: 2px dashed rgba(0, 0, 0, .3) !important;
+        }
+
+        .dropzone .dz-preview {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dropzone .dz-preview .dz-progress {
+            display: none !important;
+        }
+
+        .dropzone .dz-preview .dz-image {
+            width: 100% !important;
+        }
+
+        .loader {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            border-top: 3px solid #FFF;
+            border-right: 3px solid transparent;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .loader.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div class="bg-white p-8 md:p-10 rounded-xl shadow-2xl w-full max-w-md text-center">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8">PDF Compressor</h1>
+
+        <div class="mt-8">
+            <form action="/compress" method="post" class="space-y-6">
+
+                <div for="pdfFile" id="my-dropzone-form" class="dropzone transition-colors duration-300 ease-in-out">
+                    <div class="dz-message" data-dz-message>
+                        <span class="text-blue-600 text-xl block mb-2">📄 Drag & Drop PDF here</span>
+                        <span class="text-sm text-gray-500 block">or click to select file</span>
+                    </div>
+                </div>
+
+                <div class="quality-options text-left space-y-3">
+                    <p class="text-lg font-semibold text-gray-700 mb-3">Compression Quality:</p>
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" id="screen" name="quality" value="screen"
+                            class="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                        <label for="screen" class="text-gray-700 font-medium">Screen</label>
+                        <span class="text-sm text-gray-500">(72 dpi, lowest quality, smallest size)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" id="ebook" name="quality" value="ebook" checked
+                            class="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                        <label for="ebook" class="text-gray-700 font-medium">Ebook</label>
+                        <span class="text-sm text-gray-500">(150 dpi, low quality, smaller size)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" id="printer" name="quality" value="printer"
+                            class="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                        <label for="printer" class="text-gray-700 font-medium">Printer</label>
+                        <span class="text-sm text-gray-500">(300 dpi, medium quality, medium size)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" id="prepress" name="quality" value="prepress"
+                            class="form-radio h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                        <label for="prepress" class="text-gray-700 font-medium">Prepress</label>
+                        <span class="text-sm text-gray-500">(300 dpi, high quality, larger size)</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="compressButton" class="w-full py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50
+           relative flex items-center justify-center"> <span class="loader absolute" id="buttonLoader"></span> <span
+                        id="buttonText">Compress PDF</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</html>
